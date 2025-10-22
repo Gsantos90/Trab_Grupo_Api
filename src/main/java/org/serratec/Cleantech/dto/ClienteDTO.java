@@ -1,11 +1,11 @@
-
-// src/main/java/org/serratec/Papelaria/dto/ClienteDTO.java
 package org.serratec.Cleantech.dto;
 
 public class ClienteDTO {
     private Long id;
     private String nome;
+    private String telefone; // adicionado
     private String email;
+    private String cpf; // adicionado
     private String cep;
     private String endereco;
 
@@ -22,12 +22,28 @@ public class ClienteDTO {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getTelefone() {
+        return telefone;
+    }
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     public String getEmail() {
         return email;
     }
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getCep() {
         return cep;
     }

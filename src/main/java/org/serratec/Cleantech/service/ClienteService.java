@@ -15,7 +15,7 @@ public class ClienteService {
 	private ClienteRepository repo;
 
 	public Cliente salvar(Cliente cliente) {
-		// Consulta ViaCEP
+		// Consulta ViaCEP para preencher o campo endereco com o retorno JSON bruto
 		RestTemplate rest = new RestTemplate();
 		String url = "https://viacep.com.br/ws/" + cliente.getCep() + "/json/";
 		String endereco = rest.getForObject(url, String.class);
@@ -32,19 +32,16 @@ public class ClienteService {
 		cliente.setNome(dto.getNome());
 		cliente.setEmail(dto.getEmail());
 		cliente.setCep(dto.getCep());
+		cliente.setTelefone(dto.getTelefone()); // copia telefone do DTO
+		cliente.setCpf(dto.getCpf()); // copia cpf do DTO
 		// Outros campos conforme necessário
 
-		return salvar(cliente); // Reutiliza o método existente
-
+		return salvar(cliente); // Reutiliza o método existente para preencher endereco e salvar
 	}
 
 	public Cliente inserir(ClienteDTO dto) {
-		Cliente cliente = new Cliente();
-		cliente.setNome(dto.getNome());
-		cliente.setEmail(dto.getEmail());
-		cliente.setCep(dto.getCep());
-		// outros campos
-		return repo.save(cliente);
+		// Delegar para salvar(dto) garante que endereco será preenchido via ViaCEP
+		return salvar(dto);
 	}
 
 	public List<Cliente> listarTodos() {
@@ -56,12 +53,15 @@ public class ClienteService {
 		cliente.setNome(dto.getNome());
 		cliente.setEmail(dto.getEmail());
 		cliente.setCep(dto.getCep());
-		// outros campos
-		return repo.save(cliente);
+		cliente.setTelefone(dto.getTelefone()); // atualiza telefone
+		cliente.setCpf(dto.getCpf()); // atualiza cpf
+		// outros campos se necessário
+
+		// Reaplica a lógica de salvar para preencher endereco via ViaCEP e persistir
+		return salvar(cliente);
 	}
 
 	public void deletar(Long id) {
 		repo.deleteById(id);
 	}
-
 }
