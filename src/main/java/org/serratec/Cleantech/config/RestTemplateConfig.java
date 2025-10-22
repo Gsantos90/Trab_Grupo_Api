@@ -1,4 +1,4 @@
-package org.serratec.Papelaria.config;
+package org.serratec.Cleantech.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,8 @@ public class RestTemplateConfig {
     @Bean
     public RestTemplate restTemplate() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(3000); 
-        factory.setReadTimeout(3000);   
+        factory.setConnectTimeout(3000); // 3s
+        factory.setReadTimeout(3000);    // 3s
         return new RestTemplate(factory);
     }
 }

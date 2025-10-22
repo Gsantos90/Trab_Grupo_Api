@@ -1,4 +1,4 @@
-package org.serratec.Papelaria.exception;
+package org.serratec.Cleantech.exception;
 
 public class InvalidCepException extends RuntimeException {
     public InvalidCepException(String cep) {

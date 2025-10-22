@@ -1,9 +1,9 @@
-package org.serratec.Papelaria.service;
+package org.serratec.Cleantech.service;
 
-import org.serratec.Papelaria.dto.EnderecoViaCepDTO;
-import org.serratec.Papelaria.exception.InvalidCepException;
-import org.serratec.Papelaria.exception.ViaCepNotFoundException;
-import org.serratec.Papelaria.exception.ViaCepUnavailableException;
+import org.serratec.Cleantech.dto.EnderecoViaCepDTO;
+import org.serratec.Cleantech.exception.InvalidCepException;
+import org.serratec.Cleantech.exception.ViaCepNotFoundException;
+import org.serratec.Cleantech.exception.ViaCepUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -55,4 +55,3 @@ public class ViaCepService {
         }
     }
 }
-
