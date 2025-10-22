@@ -1,4 +1,4 @@
-package org.serratec.Papelaria.dto;
+package org.serratec.Cleantech.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,12 +9,12 @@ public class EnderecoViaCepDTO {
     private String logradouro;
     private String complemento;
     private String bairro;
-    private String localidade; 
+    private String localidade; // cidade
     private String uf;
     @JsonProperty("erro")
     private Boolean erro;
 
-    
+    // getters e setters
     public String getCep() { return cep; }
     public void setCep(String cep) { this.cep = cep; }
     public String getLogradouro() { return logradouro; }
