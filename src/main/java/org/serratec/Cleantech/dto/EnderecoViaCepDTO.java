@@ -9,8 +9,9 @@ public class EnderecoViaCepDTO {
     private String logradouro;
     private String complemento;
     private String bairro;
-    private String localidade; // cidade
+    private String localidade;
     private String uf;
+
     @JsonProperty("erro")
     private Boolean erro;
 

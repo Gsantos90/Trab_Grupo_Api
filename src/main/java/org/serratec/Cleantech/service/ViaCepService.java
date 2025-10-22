@@ -7,7 +7,6 @@ import org.serratec.Cleantech.exception.ViaCepUnavailableException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,11 +42,8 @@ public class ViaCepService {
                 throw new ViaCepNotFoundException(cepSanitizado);
             }
             return resp;
-
         } catch (ResourceAccessException ex) {
             throw new ViaCepUnavailableException("Não foi possível acessar o ViaCEP: " + ex.getMessage());
-        } catch (HttpServerErrorException ex) {
-            throw new ViaCepUnavailableException("ViaCEP retornou erro: " + ex.getStatusCode());
         } catch (InvalidCepException | ViaCepNotFoundException | ViaCepUnavailableException ex) {
             throw ex;
         } catch (Exception ex) {

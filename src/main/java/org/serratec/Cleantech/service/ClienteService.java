@@ -3,66 +3,75 @@ package org.serratec.Cleantech.service;
 import java.util.List;
 
 import org.serratec.Cleantech.Domain.Cliente;
+import org.serratec.Cleantech.dto.EnderecoViaCepDTO;
 import org.serratec.Cleantech.dto.ClienteDTO;
 import org.serratec.Cleantech.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClienteService {
-	@Autowired
-	private ClienteRepository repo;
 
-	public Cliente salvar(Cliente cliente) {
-		// Consulta ViaCEP para preencher o campo endereco com o retorno JSON bruto
-		RestTemplate rest = new RestTemplate();
-		String url = "https://viacep.com.br/ws/" + cliente.getCep() + "/json/";
-		String endereco = rest.getForObject(url, String.class);
-		cliente.setEndereco(endereco);
+    private final ClienteRepository repo;
+    private final ViaCepService viaCepService;
 
-		// Enviar e-mail (mock)
-		// emailService.enviar(cliente.getEmail(), "Cadastro atualizado!");
+    // Injeção por construtor (recomendada)
+    public ClienteService(ClienteRepository repo, ViaCepService viaCepService) {
+        this.repo = repo;
+        this.viaCepService = viaCepService;
+    }
 
-		return repo.save(cliente);
-	}
+    @Transactional
+    public Cliente salvar(Cliente cliente) {
+        // valida cep nulo/ vazio (proteção básica)
+        if (cliente.getCep() == null || cliente.getCep().trim().isEmpty()) {
+            throw new IllegalArgumentException("CEP é obrigatório");
+        }
 
-	public Cliente salvar(ClienteDTO dto) {
-		Cliente cliente = new Cliente();
-		cliente.setNome(dto.getNome());
-		cliente.setEmail(dto.getEmail());
-		cliente.setCep(dto.getCep());
-		cliente.setTelefone(dto.getTelefone()); // copia telefone do DTO
-		cliente.setCpf(dto.getCpf()); // copia cpf do DTO
-		// Outros campos conforme necessário
+        // 1. Busca o endereço no ViaCep (pode lançar exceções específicas)
+        EnderecoViaCepDTO enderecoDto = viaCepService.buscarEnderecoPorCep(cliente.getCep());
 
-		return salvar(cliente); // Reutiliza o método existente para preencher endereco e salvar
-	}
+        // 2. Mapeia os campos do DTO para a entidade Cliente
+        // OBS: ajuste os nomes dos setters conforme sua entidade Cliente
+        cliente.setLogradouro(enderecoDto.getLogradouro());
+        cliente.setBairro(enderecoDto.getBairro());
+        cliente.setCidade(enderecoDto.getLocalidade());
+        cliente.setUf(enderecoDto.getUf());
 
-	public Cliente inserir(ClienteDTO dto) {
-		// Delegar para salvar(dto) garante que endereco será preenchido via ViaCEP
-		return salvar(dto);
-	}
+        // 3. Salva o cliente no repositório
+        return repo.save(cliente);
+    }
 
-	public List<Cliente> listarTodos() {
-		return repo.findAll();
-	}
+    public Cliente salvar(ClienteDTO dto) {
+        Cliente cliente = new Cliente();
+        cliente.setNome(dto.getNome());
+        cliente.setEmail(dto.getEmail());
+        cliente.setCep(dto.getCep());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setCpf(dto.getCpf());
+        // se Cliente tiver campo endereco tipo Endereco, mapear conforme
+        return salvar(cliente);
+    }
 
-	public Cliente atualizar(Long id, ClienteDTO dto) {
-		Cliente cliente = repo.findById(id).orElseThrow();
-		cliente.setNome(dto.getNome());
-		cliente.setEmail(dto.getEmail());
-		cliente.setCep(dto.getCep());
-		cliente.setTelefone(dto.getTelefone()); // atualiza telefone
-		cliente.setCpf(dto.getCpf()); // atualiza cpf
-		// outros campos se necessário
+    public Cliente inserir(ClienteDTO dto) {
+        return salvar(dto);
+    }
 
-		// Reaplica a lógica de salvar para preencher endereco via ViaCEP e persistir
-		return salvar(cliente);
-	}
+    public List<Cliente> listarTodos() {
+        return repo.findAll();
+    }
 
-	public void deletar(Long id) {
-		repo.deleteById(id);
-	}
-	
+    public Cliente atualizar(Long id, ClienteDTO dto) {
+        Cliente cliente = repo.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + id));
+        cliente.setNome(dto.getNome());
+        cliente.setEmail(dto.getEmail());
+        cliente.setCep(dto.getCep());
+        cliente.setTelefone(dto.getTelefone());
+        cliente.setCpf(dto.getCpf());
+        return salvar(cliente);
+    }
+
+    public void deletar(Long id) {
+        repo.deleteById(id);
+    }
 }
