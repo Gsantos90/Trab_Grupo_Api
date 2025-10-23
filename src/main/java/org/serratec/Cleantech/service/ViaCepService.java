@@ -50,4 +50,9 @@ public class ViaCepService {
             throw new ViaCepUnavailableException("Erro ao consultar ViaCEP: " + ex.getMessage());
         }
     }
+
+    public EnderecoViaCepDTO buscar(String cep) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscar'");
+    }
 }
