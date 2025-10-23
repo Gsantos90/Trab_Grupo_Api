@@ -1,5 +1,5 @@
 
-// src/main/java/org/serratec/Papelaria/service/CategoriaService.java
+
 package org.serratec.Cleantech.service;
 
 import org.serratec.Cleantech.Domain.Categoria;
