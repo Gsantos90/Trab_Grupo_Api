@@ -59,4 +59,9 @@ public class ViaCepService {
 
 		return null;
 	}
+
+    public EnderecoViaCepDTO buscar(String cep) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscar'");
+    }
 }

@@ -1,24 +1,14 @@
-package org.serratec.Cleantech.Domain;
+package org.serratec.Cleantech.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Endereco {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EnderecoDTO {
     private Long id;
-
     private String cep;
     private String logradouro;
     private String bairro;
     private String cidade;
     private String uf;
     private String complemento;
-
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    private Long clienteId;
 
     public Long getId() {
         return id;
@@ -76,16 +66,11 @@ public class Endereco {
         this.complemento = complemento;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Long getClienteId() {
+        return clienteId;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public String getNumero() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNumero'");
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 }

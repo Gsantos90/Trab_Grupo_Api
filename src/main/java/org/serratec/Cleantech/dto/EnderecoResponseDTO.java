@@ -24,7 +24,7 @@ public class EnderecoResponseDTO {
         this.numero = entidade.getNumero();
         this.complemento = entidade.getComplemento();
         this.bairro = entidade.getBairro();
-        this.localidade = entidade.getLocalidade();
+        this.localidade = entidade.getCidade();
         this.uf = entidade.getUf();
         this.clienteId = entidade.getCliente().getId(); 
     }
