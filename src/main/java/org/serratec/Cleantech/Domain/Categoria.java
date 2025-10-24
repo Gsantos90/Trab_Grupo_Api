@@ -1,32 +1,37 @@
-package org.serratec.Cleantech.Domain;
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 @Entity
 public class Categoria {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nome;
-    // getters e setters
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long id;
+
+      @NotBlank(message = "O nome da categoria é obrigatório.")
+      @Column(nullable = false, unique = true)
+      private String nome;
+
+      @OneToMany(mappedBy = "categoria")
+      private List<Produto> produtos;
 
 
-	public Long getId() {
-		return id;
-	}
+      // getters e setters
+      public Long getId() { 
+          return id; 
+      }
+      public void setId(Long id) { 
+          this.id = id; 
+      }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+      public String getNome() { 
+          return nome; 
+      }
+      public void setNome(String nome) { 
+          this.nome = nome; 
+      }
 
-	public String getNome() {
-		return nome;
-	}
+      public List<Produto> getProdutos() { 
+          return produtos; 
+      }
+      public void setProdutos(List<Produto> produtos) { 
+          this.produtos = produtos; 
+      }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 }
