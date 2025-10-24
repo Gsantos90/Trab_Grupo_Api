@@ -1,5 +1,4 @@
 
-// src/main/java/org/serratec/Papelaria/controller/CategoriaController.java
 package org.serratec.Cleantech.controller;
 
 import org.serratec.Cleantech.Domain.Categoria;

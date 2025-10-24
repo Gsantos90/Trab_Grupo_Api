@@ -30,6 +30,10 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
 
+    private BigDecimal valorTotal;
+    
+    private BigDecimal percentualDesconto; 
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ItemPedido> itens = new HashSet<>(); 
 
@@ -44,7 +48,8 @@ public class Pedido {
         }
         return total;
     }
-
+    
+    
 	public Long getId() {
 		return id;
 	}
@@ -77,6 +82,22 @@ public class Pedido {
 		this.status = status;
 	}
 
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public BigDecimal getPercentualDesconto() {
+        return percentualDesconto;
+    }
+
+    public void setPercentualDesconto(BigDecimal percentualDesconto) {
+        this.percentualDesconto = percentualDesconto;
+    }
+
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
@@ -92,5 +113,4 @@ public class Pedido {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-    
 }
