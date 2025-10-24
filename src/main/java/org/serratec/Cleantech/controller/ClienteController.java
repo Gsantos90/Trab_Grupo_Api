@@ -1,41 +1,59 @@
 package org.serratec.Cleantech.controller;
 
+import org.serratec.Cleantech.dto.ClienteRequestDTO; 
 import org.serratec.Cleantech.dto.ClienteResponseDTO;
-import org.serratec.Cleantech.dto.ClienteDTO;
 import org.serratec.Cleantech.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity; 
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid; 
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 public class ClienteController {
+    
     @Autowired
-    private ClienteService service;
-
+    private ClienteService clienteService; 
     @PostMapping
-    public ClienteResponseDTO inserir(@RequestBody ClienteDTO dto) {
-        return service.inserir(dto);
+ 
+    public ResponseEntity<ClienteResponseDTO> inserir(@Valid @RequestBody ClienteRequestDTO dto) {
+    
+        ClienteResponseDTO response = clienteService.salvar(dto);
+        return new ResponseEntity<>(response, HttpStatus.CREATED); 
     }
-
+    
     @GetMapping
-    public List<ClienteResponseDTO> listarTodos() {
-        return service.listarTodos();
+    public ResponseEntity<List<ClienteResponseDTO>> listarTodos() {
+        List<ClienteResponseDTO> response = clienteService.listarTodos();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ClienteResponseDTO buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id);
+    public ResponseEntity<ClienteResponseDTO> buscarPorId(@PathVariable Long id) {
+        ClienteResponseDTO response = clienteService.buscarPorId(id);
+        return ResponseEntity.ok(response);
+    }
+  @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> atualizar
+    (@PathVariable Long id, 
+    @Valid @RequestBody ClienteRequestDTO dto) {
+     ClienteResponseDTO response = clienteService.editar(id, dto);
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ClienteResponseDTO atualizar(@PathVariable Long id, @RequestBody ClienteDTO dto) {
-        return service.atualizar(id, dto);
+ @PatchMapping("/{id}/desativar")
+    public ResponseEntity<Void> desativar(@PathVariable Long id) {
+        clienteService.desativarCliente(id); 
+        return ResponseEntity.noContent().build(); 
     }
-
+    
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
-        service.deletar(id);
+    public ResponseEntity<Void> deletar
+    (@PathVariable Long id) {
+        clienteService.desativarCliente(id); 
+        return ResponseEntity.noContent().build(); 
     }
 }

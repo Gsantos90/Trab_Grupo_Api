@@ -4,155 +4,173 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClienteResponseDTO {
-    private Long id;
-    private String nome;
-    private String telefone;
-    private String email;
-    private String cpf;
-    private String cep;
-    private String logradouro;
-    private String complemento;
-    private String bairro;
-    private String localidade;
-    private String uf;
-    private String numero;
+	private Long id;
+	private String nome;
+	private String telefone;
+	private String email;
+	private String cpf;
+	private String cep;
+	private String logradouro;
+	private String complemento;
+	private String bairro;
+	private String cidade;
+	private String uf;
+	private String numero;
+	private boolean ativo;
 
-    public ClienteResponseDTO() {
-    }
+	public ClienteResponseDTO() {
+	}
 
-    public ClienteResponseDTO(Long id, String nome, String telefone, String email, String cpf, 
-                             String cep, String numero) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.cpf = cpf;
-        this.cep = cep;
-        this.numero = numero;
-    }
+	public ClienteResponseDTO(
+		Long id, String nome, String telefone, String email, String cpf, String cep,
+		String logradouro, String complemento, String bairro, String cidade, String uf, String numero,
+		boolean ativo) {
 
- 
-    public Long getId() {
-        return id;
-    }
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.email = email;
+		this.cpf = cpf;
+		this.cep = cep;
+		this.logradouro = logradouro;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.uf = uf;
+		this.numero = numero;
+		this.ativo = ativo;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public String getCep() {
-        return cep;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
+	public String getCep() {
+		return cep;
+	}
 
-    public String getLogradouro() {
-        return logradouro;
-    }
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
+	public String getLogradouro() {
+		return logradouro;
+	}
 
-    public String getComplemento() {
-        return complemento;
-    }
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
+	public String getComplemento() {
+		return complemento;
+	}
 
-    public String getBairro() {
-        return bairro;
-    }
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
+	public String getBairro() {
+		return bairro;
+	}
 
-    public String getLocalidade() {
-        return localidade;
-    }
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
-    public void setLocalidade(String localidade) {
-        this.localidade = localidade;
-    }
+	public String getCidade() {
+		return cidade;
+	}
 
-    public String getUf() {
-        return uf;
-    }
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
 
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
+	public String getUf() {
+		return uf;
+	}
 
-    public String getNumero() {
-        return numero;
-    }
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
+	public String getNumero() {
+		return numero;
+	}
 
-    public String getEnderecoCompleto() {
-        if (logradouro == null && localidade == null) {
-            return null; 
-        }
-        
-        StringBuilder enderecoCompleto = new StringBuilder();
-        if (logradouro != null) {
-            enderecoCompleto.append(logradouro);
-        }
-        if (numero != null && !numero.trim().isEmpty()) {
-            enderecoCompleto.append(", ").append(numero);
-        }
-        if (complemento != null && !complemento.isEmpty()) {
-            enderecoCompleto.append(" - ").append(complemento);
-        }
-        if (bairro != null) {
-            enderecoCompleto.append(" - ").append(bairro);
-        }
-        if (localidade != null) {
-            enderecoCompleto.append(", ").append(localidade);
-        }
-        if (uf != null) {
-            enderecoCompleto.append(" - ").append(uf);
-        }
-        
-        return enderecoCompleto.toString();
-    }
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getEnderecoCompleto() {
+
+		if (logradouro == null && cidade == null) {
+			return null;
+		}
+
+		StringBuilder enderecoCompleto = new StringBuilder();
+		if (logradouro != null) {
+			enderecoCompleto.append(logradouro);
+		}
+		if (numero != null && !numero.trim().isEmpty()) {
+			enderecoCompleto.append(", ").append(numero);
+		}
+		if (complemento != null && !complemento.isEmpty()) {
+			enderecoCompleto.append(" - ").append(complemento);
+		}
+		if (bairro != null) {
+			enderecoCompleto.append(" - ").append(bairro);
+		}
+		if (cidade != null) {
+			enderecoCompleto.append(", ").append(cidade);
+		}
+		if (uf != null) {
+			enderecoCompleto.append(" - ").append(uf);
+		}
+
+		return enderecoCompleto.toString();
+	}
 }

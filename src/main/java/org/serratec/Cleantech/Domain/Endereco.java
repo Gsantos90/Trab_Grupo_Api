@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_endereco_secundario")
+@Table(name = "tb_endereco")
 public class Endereco {
 
     @Id

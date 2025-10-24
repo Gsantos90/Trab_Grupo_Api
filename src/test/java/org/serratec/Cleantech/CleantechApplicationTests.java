@@ -1,10 +1,7 @@
 package org.serratec.Cleantech;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import org.serratec.Cleantech.CleantechApplication; 
-
+import org.springframework.boot.test.context.SpringBootTest; 
 
 @SpringBootTest(classes = CleantechApplication.class)
 class PapelariaApplicationTests {
