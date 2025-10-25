@@ -7,10 +7,11 @@ import org.serratec.Cleantech.Domain.Cliente;
 import org.serratec.Cleantech.dto.ClienteRequestDTO;
 import org.serratec.Cleantech.dto.ClienteResponseDTO;
 import org.serratec.Cleantech.dto.EnderecoViaCepDTO;
-import org.serratec.Cleantech.exception.ResourceNotFoundException; 
-import org.serratec.Cleantech.exception.ValidationException; 
-import org.serratec.Cleantech.repository.ClienteRepository; 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.serratec.Cleantech.exception.ResourceNotFoundException;
+import org.serratec.Cleantech.exception.ValidationException;
+import org.serratec.Cleantech.exception.ViaCepNotFoundException;
+import org.serratec.Cleantech.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,6 @@ public class ClienteService {
 	@Autowired
 	private EmailService emailService;
 
- 
 	private Cliente toEntity(ClienteRequestDTO dto) {
 		Cliente cliente = new Cliente();
 
@@ -53,12 +53,11 @@ public class ClienteService {
 		dto.setUf(cliente.getUf());
 		dto.setNumero(cliente.getNumero());
 		dto.setComplemento(cliente.getComplemento());
-		dto.setAtivo(cliente.isAtivo()); 
+		dto.setAtivo(cliente.isAtivo());
 		return dto;
 	}
 
-
-	@Transactional 
+	@Transactional
 	public ClienteResponseDTO salvar(ClienteRequestDTO dto) {
 		if (clienteRepository.findByCpfAndAtivoTrue(dto.getCpf()).isPresent()) {
 			throw new ValidationException("CPF já cadastrado em um cliente ativo. Utilize o PUT para atualizar.");
@@ -68,8 +67,20 @@ public class ClienteService {
 		}
 
 		Cliente cliente = toEntity(dto);
+		EnderecoViaCepDTO enderecoViaCep = null;
 
-		EnderecoViaCepDTO enderecoViaCep = viaCepService.buscarEnderecoPorCep(cliente.getCep());
+		try {
+			enderecoViaCep = viaCepService.buscarEnderecoPorCep(cliente.getCep());
+
+			if (enderecoViaCep.getLogradouro() == null && enderecoViaCep.getLocalidade() == null) {
+
+				throw new ValidationException("CEP [" + cliente.getCep() + "] não encontrado ou inválido.");
+			}
+
+		} catch (ViaCepNotFoundException ex) {
+
+			throw new ValidationException(ex.getMessage());
+		}
 
 		cliente.setLogradouro(enderecoViaCep.getLogradouro());
 		cliente.setBairro(enderecoViaCep.getBairro());
@@ -93,7 +104,7 @@ public class ClienteService {
 		return clienteRepository.findByAtivoTrue().stream().map(this::toResponseDTO).collect(Collectors.toList());
 	}
 
-	@Transactional 
+	@Transactional
 	public ClienteResponseDTO editar(Long id, ClienteRequestDTO dto) {
 		Cliente clienteExistente = clienteRepository.findByIdAndAtivoTrue(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Cliente ID " + id + " não encontrado ou inativo."));
@@ -107,7 +118,19 @@ public class ClienteService {
 
 		if (!clienteExistente.getCep().equals(dto.getCep())) {
 			clienteExistente.setCep(dto.getCep());
-			EnderecoViaCepDTO enderecoViaCep = viaCepService.buscarEnderecoPorCep(dto.getCep());
+			EnderecoViaCepDTO enderecoViaCep = null;
+
+			try {
+				enderecoViaCep = viaCepService.buscarEnderecoPorCep(dto.getCep());
+
+				if (enderecoViaCep.getLogradouro() == null && enderecoViaCep.getLocalidade() == null) {
+					throw new ValidationException("Novo CEP [" + dto.getCep() + "] não encontrado ou inválido.");
+				}
+
+			} catch (ViaCepNotFoundException ex) {
+				throw new ValidationException(ex.getMessage());
+			}
+
 			clienteExistente.setLogradouro(enderecoViaCep.getLogradouro());
 			clienteExistente.setBairro(enderecoViaCep.getBairro());
 			clienteExistente.setCidade(enderecoViaCep.getLocalidade());
@@ -117,13 +140,13 @@ public class ClienteService {
 		Cliente clienteAtualizado = clienteRepository.save(clienteExistente);
 		return toResponseDTO(clienteAtualizado);
 	}
-   
-	@Transactional 
+
+	@Transactional
 	public void desativarCliente(Long id) {
 		Cliente cliente = clienteRepository.findByIdAndAtivoTrue(id).orElseThrow(
 				() -> new ResourceNotFoundException("Cliente ID " + id + " não encontrado ou já está inativo."));
 
 		cliente.setAtivo(false);
 		clienteRepository.save(cliente);
-	} 
+	}
 }

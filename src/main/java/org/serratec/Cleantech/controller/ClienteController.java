@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid; 
 
 import java.util.List;
+import java.util.HashMap; // <<< Import necessário para o Map
+import java.util.Map;     // <<< Import necessário para o Map
 
 @RestController
 @RequestMapping("/clientes")
@@ -44,10 +46,19 @@ public class ClienteController {
         return ResponseEntity.ok(response);
     }
 
+    // MÉTODO ALTERADO PARA RETORNAR 200 OK COM JSON DE MENSAGEM
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar
+    public ResponseEntity<Map<String, String>> deletarComMensagem
     (@PathVariable Long id) {
+        // 1. Executa o Soft Delete
         clienteService.desativarCliente(id); 
-        return ResponseEntity.noContent().build(); 
+        
+        // 2. Cria o JSON de sucesso
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "SUCESSO");
+        response.put("mensagem", "Cliente ID " + id + " desativado com sucesso.");
+        
+        // 3. Retorna o status 200 OK com o corpo JSON
+        return ResponseEntity.ok(response);
     }
 }
