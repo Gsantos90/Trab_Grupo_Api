@@ -2,9 +2,11 @@ package org.serratec.Cleantech.Domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
-@Table(name = "tb_cliente") 
+@Table(name = "tb_clientes")
+@SQLRestriction("ativo = true") 
 public class Cliente {
 
     @Id
@@ -34,16 +36,15 @@ public class Cliente {
     private String bairro;
     private String uf;
     private String cidade;
-   
+    
     private String numero; 
     private String complemento; 
 
- 
     @Column(nullable = false)
     private boolean ativo = true; 
-   
+    
     public Cliente() {
-      
+        
     }
 
     public Long getId() {
@@ -142,7 +143,6 @@ public class Cliente {
         this.complemento = complemento;
     }
     
-
     public boolean isAtivo() {
         return ativo;
     }
@@ -150,5 +150,4 @@ public class Cliente {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
 }

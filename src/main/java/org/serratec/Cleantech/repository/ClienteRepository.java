@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+   
+	Optional<Cliente> findByCpfAndAtivoTrue(String cpf);
 
-	Optional<Cliente> findByCpf(String cpf);
-
-	Optional<Cliente> findByEmail(String email);
-
+	Optional<Cliente> findByEmailAndAtivoTrue(String email);
+     
 	List<Cliente> findByAtivoTrue();
 
 	Optional<Cliente> findByIdAndAtivoTrue(Long id);

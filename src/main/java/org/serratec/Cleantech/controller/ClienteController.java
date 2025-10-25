@@ -17,10 +17,9 @@ public class ClienteController {
     
     @Autowired
     private ClienteService clienteService; 
-    @PostMapping
- 
-    public ResponseEntity<ClienteResponseDTO> inserir(@Valid @RequestBody ClienteRequestDTO dto) {
     
+    @PostMapping
+    public ResponseEntity<ClienteResponseDTO> inserir(@Valid @RequestBody ClienteRequestDTO dto) {
         ClienteResponseDTO response = clienteService.salvar(dto);
         return new ResponseEntity<>(response, HttpStatus.CREATED); 
     }
@@ -36,20 +35,15 @@ public class ClienteController {
         ClienteResponseDTO response = clienteService.buscarPorId(id);
         return ResponseEntity.ok(response);
     }
-  @PutMapping("/{id}")
+    
+    @PutMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> atualizar
     (@PathVariable Long id, 
     @Valid @RequestBody ClienteRequestDTO dto) {
-     ClienteResponseDTO response = clienteService.editar(id, dto);
+        ClienteResponseDTO response = clienteService.editar(id, dto);
         return ResponseEntity.ok(response);
     }
 
- @PatchMapping("/{id}/desativar")
-    public ResponseEntity<Void> desativar(@PathVariable Long id) {
-        clienteService.desativarCliente(id); 
-        return ResponseEntity.noContent().build(); 
-    }
-    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar
     (@PathVariable Long id) {
