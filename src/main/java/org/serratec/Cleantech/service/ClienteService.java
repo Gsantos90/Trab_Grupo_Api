@@ -88,7 +88,7 @@ public class ClienteService {
 		cliente.setUf(enderecoViaCep.getUf());
 
 		Cliente clienteSalvo = clienteRepository.save(cliente);
-		emailService.enviarEmailNovoCliente(clienteSalvo.getEmail(), clienteSalvo.getNome());
+		emailService.enviarEmailBoasVindas(clienteSalvo.getEmail(), clienteSalvo.getNome());
 
 		return toResponseDTO(clienteSalvo);
 	}
