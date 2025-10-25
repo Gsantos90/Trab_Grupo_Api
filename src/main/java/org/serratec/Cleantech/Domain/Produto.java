@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +28,7 @@ public class Produto {
     @NotNull(message = "O preço do produto é obrigatório.")
     @Positive(message = "O preço deve ser maior que zero.")
     @Column(nullable = false)
-    private Double preco;
+    private BigDecimal preco;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
@@ -33,7 +36,7 @@ public class Produto {
 
     public Produto() {}
 
-    public Produto(Long id, String nome, Double preco, Categoria categoria) {
+    public Produto(Long id, String nome, BigDecimal preco, Categoria categoria) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
@@ -54,10 +57,10 @@ public class Produto {
         this.nome = nome; 
     }
 
-    public Double getPreco() { 
+    public BigDecimal getPreco() { 
         return preco; 
     }
-    public void setPreco(Double preco) { 
+    public void setPreco(BigDecimal preco) { 
         this.preco = preco; 
     }
 
@@ -67,4 +70,5 @@ public class Produto {
     public void setCategoria(Categoria categoria) { 
         this.categoria = categoria; 
     }
+
 }

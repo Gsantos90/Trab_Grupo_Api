@@ -86,7 +86,6 @@ public class PedidoService {
             pedidoSalvo.getItens().add(item);
         }
         
-        // LINHA DE DEBUG TEMPORÁRIA ADICIONADA AQUI:
         System.out.println("DEBUG: Valor Bruto ANTES do Desconto: " + valorTotalBruto); 
 
         BigDecimal percentualDescontoProgressivo = calcularDescontoProgressivo(valorTotalBruto);
