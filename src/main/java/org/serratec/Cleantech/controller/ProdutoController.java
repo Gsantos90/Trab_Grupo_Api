@@ -1,7 +1,7 @@
 package org.serratec.Cleantech.controller;
 
-import org.serratec.Cleantech.Domain.Produto;
 import org.serratec.Cleantech.dto.ProdutoDTO;
+import org.serratec.Cleantech.dto.ProdutoResponseDTO;
 import org.serratec.Cleantech.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity; 
@@ -16,17 +16,17 @@ public class ProdutoController {
     private ProdutoService service;
 
     @PostMapping
-    public Produto inserir(@RequestBody ProdutoDTO dto) {
+    public ProdutoResponseDTO inserir(@RequestBody ProdutoDTO dto) { 
         return service.inserir(dto);
     }
     
     @GetMapping
-    public List<Produto> listarTodos() {
+    public List<ProdutoResponseDTO> listarTodos() { 
         return service.listarTodos();
     }
 
     @PutMapping("/{id}")
-    public Produto atualizar(@PathVariable Long id, @RequestBody ProdutoDTO dto) {
+    public ProdutoResponseDTO atualizar(@PathVariable Long id, @RequestBody ProdutoDTO dto) { 
         return service.atualizar(id, dto);
     }
 

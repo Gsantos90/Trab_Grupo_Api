@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.serratec.Cleantech.dto.PedidoDTO;
-import org.serratec.Cleantech.Domain.Pedido;
+import org.serratec.Cleantech.dto.PedidoResponseDTO;
 import org.serratec.Cleantech.Domain.StatusPedido;
 import org.serratec.Cleantech.service.PedidoService;
 
@@ -19,27 +19,26 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @PostMapping
-    public ResponseEntity<Pedido> salvar(@RequestBody PedidoDTO pedidoDto) {
-        Pedido novoPedido = pedidoService.salvar(pedidoDto);
+    public ResponseEntity<PedidoResponseDTO> salvar(@RequestBody PedidoDTO pedidoDto) { // Retorna DTO
+        PedidoResponseDTO novoPedido = pedidoService.salvar(pedidoDto);
         return new ResponseEntity<>(novoPedido, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pedido> buscarPorId(@PathVariable Long id) {
-        Pedido pedido = pedidoService.buscarPorId(id);
+    public ResponseEntity<PedidoResponseDTO> buscarPorId(@PathVariable Long id) { // Retorna DTO
+        PedidoResponseDTO pedido = pedidoService.buscarPorId(id);
         return ResponseEntity.ok(pedido);
     }
     
     @GetMapping
-    public ResponseEntity<List<Pedido>> listarTodos() {
-
-        return ResponseEntity.ok(pedidoService.listarTodos());
+    public ResponseEntity<List<PedidoResponseDTO>> listarTodos() { // Retorna Lista de DTOs
+        List<PedidoResponseDTO> pedidos = pedidoService.listarTodos();
+        return ResponseEntity.ok(pedidos);
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Pedido> atualizarStatus(@PathVariable Long id, @RequestBody StatusPedido novoStatus) {
-
-        Pedido pedidoAtualizado = pedidoService.atualizarStatus(id, novoStatus);
+    public ResponseEntity<PedidoResponseDTO> atualizarStatus(@PathVariable Long id, @RequestBody StatusPedido novoStatus) { // Retorna DTO
+        PedidoResponseDTO pedidoAtualizado = pedidoService.atualizarStatus(id, novoStatus);
         return ResponseEntity.ok(pedidoAtualizado);
     }
 }

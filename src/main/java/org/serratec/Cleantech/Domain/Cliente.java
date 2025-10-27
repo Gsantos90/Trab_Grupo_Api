@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
-@Table(name = "tb_clientes")
+@Table(name = "clientes")
 @SQLRestriction("ativo = true") 
 public class Cliente {
 

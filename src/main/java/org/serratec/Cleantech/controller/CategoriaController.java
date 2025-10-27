@@ -1,8 +1,7 @@
-
 package org.serratec.Cleantech.controller;
 
-import org.serratec.Cleantech.Domain.Categoria;
 import org.serratec.Cleantech.dto.CategoriaDTO;
+import org.serratec.Cleantech.Domain.Categoria; 
 import org.serratec.Cleantech.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +14,17 @@ public class CategoriaController {
     private CategoriaService service;
 
     @PostMapping
-    public Categoria inserir(@RequestBody CategoriaDTO dto) {
+    public CategoriaDTO inserir(@RequestBody CategoriaDTO dto) { 
         return service.inserir(dto);
     }
 
     @GetMapping
-    public List<Categoria> listarTodos() {
-        return service.listarTodos();
+    public List<CategoriaDTO> listarTodos() {
+        return service.listarTodosDTO();
     }
 
     @PutMapping("/{id}")
-    public Categoria atualizar(@PathVariable Long id, @RequestBody CategoriaDTO dto) {
+    public CategoriaDTO atualizar(@PathVariable Long id, @RequestBody CategoriaDTO dto) { // <<< MUDANÇA: Retorna DTO
         return service.atualizar(id, dto);
     }
 

@@ -5,13 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.serratec.Cleantech.Domain.*;
 import org.serratec.Cleantech.repository.*;
-import org.serratec.Cleantech.dto.*;
+import org.serratec.Cleantech.dto.*; 
+import org.serratec.Cleantech.dto.ItemPedidoResponseDTO; 
 import org.serratec.Cleantech.exception.ResourceNotFoundException; 
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List; 
 import java.util.Optional;
+import java.util.stream.Collectors; 
 
 @Service
 public class PedidoService {
@@ -20,34 +22,73 @@ public class PedidoService {
     @Autowired private ItemPedidoRepository itemPedidoRepository;
     @Autowired private ClienteRepository clienteRepository;
     @Autowired private ProdutoRepository produtoRepository; 
-    
-    public Pedido buscarPorId(Long id) {
-        return pedidoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com ID: " + id)); 
+
+    private ItemPedidoResponseDTO toItemPedidoDTO(ItemPedido item) {
+        ItemPedidoResponseDTO dto = new ItemPedidoResponseDTO();
+        dto.setId(item.getId());
+        dto.setValorVenda(item.getValorVenda());
+        dto.setQuantidade(item.getQuantidade());
+        dto.setDesconto(item.getDesconto());
+        
+        if (item.getProduto() != null) {
+            dto.setProdutoId(item.getProduto().getId());
+            dto.setProdutoNome(item.getProduto().getNome());
+        }
+        return dto;
     }
     
-    public List<Pedido> listarTodos() {
-        return pedidoRepository.findAll();
+    private PedidoResponseDTO toPedidoDTO(Pedido pedido) {
+        PedidoResponseDTO dto = new PedidoResponseDTO();
+        dto.setId(pedido.getId());
+        dto.setDataPedido(pedido.getDataPedido());
+        dto.setStatus(pedido.getStatus());
+        dto.setValorTotal(pedido.getValorTotal());
+        dto.setPercentualDesconto(pedido.getPercentualDesconto());
+        
+        if (pedido.getCliente() != null) {
+            dto.setClienteId(pedido.getCliente().getId());
+            dto.setClienteNome(pedido.getCliente().getNome());
+        }
+        
+        if (pedido.getItens() != null) {
+            List<ItemPedidoResponseDTO> itensDto = pedido.getItens().stream()
+                                                    .map(this::toItemPedidoDTO)
+                                                    .collect(Collectors.toList());
+            dto.setItens(itensDto);
+        }
+        
+        return dto;
+    }
+
+    public PedidoResponseDTO buscarPorId(Long id) {
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com ID: " + id));
+        return toPedidoDTO(pedido);
+    }
+    
+    public List<PedidoResponseDTO> listarTodos() {
+        return pedidoRepository.findAll().stream()
+                .map(this::toPedidoDTO)
+                .collect(Collectors.toList());
     }
     
 
     public BigDecimal calcularDescontoProgressivo(BigDecimal valorBruto) {
         if (valorBruto.compareTo(new BigDecimal("1000.00")) >= 0) {
-            return new BigDecimal("0.20"); // 20%
+            return new BigDecimal("0.20");
         } else if (valorBruto.compareTo(new BigDecimal("500.00")) >= 0) {
-            return new BigDecimal("0.15"); // 15%
+            return new BigDecimal("0.15");
         } else if (valorBruto.compareTo(new BigDecimal("300.00")) >= 0) {
-            return new BigDecimal("0.10"); // 10%
+            return new BigDecimal("0.10");
         } else if (valorBruto.compareTo(new BigDecimal("100.00")) >= 0) {
-            return new BigDecimal("0.05"); // 5%
+            return new BigDecimal("0.05");
         } else {
-            return BigDecimal.ZERO; // 0%
+            return BigDecimal.ZERO;
         }
     }
 
-
     @Transactional
-    public Pedido salvar(PedidoDTO dto) {
+    public PedidoResponseDTO salvar(PedidoDTO dto) {
 
         Optional<Cliente> clienteOpt = clienteRepository.findById(dto.getClienteId());
         Cliente cliente = clienteOpt.orElseThrow(() -> 
@@ -93,18 +134,23 @@ public class PedidoService {
         BigDecimal valorTotalLiquido = valorTotalBruto.subtract(valorDescontoProgressivo);
         
         pedidoSalvo.setPercentualDesconto(percentualDescontoProgressivo);
-        
         pedidoSalvo.setValorTotal(valorTotalLiquido);
 
-        return pedidoRepository.save(pedidoSalvo);
+        Pedido pedidoFinal = pedidoRepository.save(pedidoSalvo);
+        
+        return toPedidoDTO(pedidoFinal); 
     }
     
     @Transactional
-    public Pedido atualizarStatus(Long id, StatusPedido novoStatus) {
+    public PedidoResponseDTO atualizarStatus(Long id, StatusPedido novoStatus) {
         
-        Pedido pedido = buscarPorId(id); 
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com ID: " + id)); 
+        
         pedido.setStatus(novoStatus); 
         
-        return pedidoRepository.save(pedido);
+        Pedido pedidoAtualizado = pedidoRepository.save(pedido);
+        
+        return toPedidoDTO(pedidoAtualizado);
     }
 }
