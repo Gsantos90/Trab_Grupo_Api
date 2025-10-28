@@ -45,6 +45,9 @@ public class PedidoService {
         dto.setValorTotal(pedido.getValorTotal());
         dto.setPercentualDesconto(pedido.getPercentualDesconto());
         
+        dto.setValorBruto(pedido.getValorBruto());
+        dto.setValorDesconto(pedido.getValorDesconto());
+        
         if (pedido.getCliente() != null) {
             dto.setClienteId(pedido.getCliente().getId());
             dto.setClienteNome(pedido.getCliente().getNome());
@@ -133,6 +136,9 @@ public class PedidoService {
         BigDecimal valorDescontoProgressivo = valorTotalBruto.multiply(percentualDescontoProgressivo);      
         BigDecimal valorTotalLiquido = valorTotalBruto.subtract(valorDescontoProgressivo);
         
+        pedidoSalvo.setValorBruto(valorTotalBruto);
+        pedidoSalvo.setValorDesconto(valorDescontoProgressivo);
+
         pedidoSalvo.setPercentualDesconto(percentualDescontoProgressivo);
         pedidoSalvo.setValorTotal(valorTotalLiquido);
 

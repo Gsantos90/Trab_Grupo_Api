@@ -14,12 +14,17 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String uf;
+    private String numero;
     private String complemento;
+
+    // ðŸ†• Novo campo â€” tipo do endereÃ§o
+    private String tipo; // Ex: "Residencial", "Comercial", "CobranÃ§a"
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -68,6 +73,14 @@ public class Endereco {
         this.uf = uf;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     public String getComplemento() {
         return complemento;
     }
@@ -76,16 +89,19 @@ public class Endereco {
         this.complemento = complemento;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public String getNumero() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getNumero'");
     }
 }

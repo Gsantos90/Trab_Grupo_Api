@@ -48,7 +48,9 @@ public class EnderecoService {
         endereco.setBairro(viaCep.getBairro());
         endereco.setCidade(viaCep.getLocalidade());
         endereco.setUf(viaCep.getUf());
+        endereco.setNumero(dto.getNumero());       // 🆕 número
         endereco.setComplemento(dto.getComplemento());
+        endereco.setTipo(dto.getTipo());           // 🆕 tipo
         endereco.setCliente(cliente.get());
 
         return enderecoRepository.save(endereco);
@@ -66,7 +68,16 @@ public class EnderecoService {
             endereco.setUf(viaCep.getUf());
         }
 
+        if (dto.getNumero() != null) {
+            endereco.setNumero(dto.getNumero());    // 🆕 atualizar número
+        }
+
+        if (dto.getTipo() != null) {
+            endereco.setTipo(dto.getTipo());        // 🆕 atualizar tipo
+        }
+
         endereco.setComplemento(dto.getComplemento());
+
         return enderecoRepository.save(endereco);
     }
 
@@ -77,4 +88,3 @@ public class EnderecoService {
         enderecoRepository.deleteById(id);
     }
 }
-

@@ -1,13 +1,16 @@
 package org.serratec.Cleantech.dto;
 
 public class EnderecoDTO {
+
     private Long id;
     private String cep;
     private String logradouro;
     private String bairro;
     private String cidade;
     private String uf;
+    private String numero; // 🆕 novo campo
     private String complemento;
+    private String tipo; // 🆕 novo campo
     private Long clienteId;
 
     public Long getId() {
@@ -58,12 +61,28 @@ public class EnderecoDTO {
         this.uf = uf;
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     public String getComplemento() {
         return complemento;
     }
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Long getClienteId() {

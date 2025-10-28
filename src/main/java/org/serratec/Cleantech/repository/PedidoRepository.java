@@ -1,4 +1,3 @@
-
 package org.serratec.Cleantech.repository;
 
 import java.time.Instant;

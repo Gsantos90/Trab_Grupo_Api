@@ -32,11 +32,31 @@ public class Pedido {
     private StatusPedido status; 
 
     private BigDecimal valorTotal; 
-    
     private BigDecimal percentualDesconto; 
+    private BigDecimal valorBruto;
+    private BigDecimal valorDesconto;
 
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    public BigDecimal getValorBruto() {
+		return valorBruto;
+	}
+
+
+	public void setValorBruto(BigDecimal valorBruto) {
+		this.valorBruto = valorBruto;
+	}
+
+
+	public BigDecimal getValorDesconto() {
+		return valorDesconto;
+	}
+
+
+	public void setValorDesconto(BigDecimal valorDesconto) {
+		this.valorDesconto = valorDesconto;
+	}
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<ItemPedido> itens = new HashSet<>(); 
 
     

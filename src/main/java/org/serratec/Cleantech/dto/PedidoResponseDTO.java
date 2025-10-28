@@ -1,3 +1,4 @@
+
 package org.serratec.Cleantech.dto;
 
 import java.math.BigDecimal;
@@ -12,6 +13,8 @@ public class PedidoResponseDTO {
     private Instant dataPedido;
     private StatusPedido status;
     private BigDecimal valorTotal; 
+    private BigDecimal valorBruto; 
+    private BigDecimal valorDesconto; 
     private BigDecimal percentualDesconto;
 
     private Long clienteId;
@@ -50,6 +53,22 @@ public class PedidoResponseDTO {
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
+
+    public BigDecimal getValorBruto() {
+        return valorBruto;
+    }
+
+    public void setValorBruto(BigDecimal valorBruto) {
+        this.valorBruto = valorBruto;
+    }
+
+    public BigDecimal getValorDesconto() {
+        return valorDesconto;
+    }
+
+    public void setValorDesconto(BigDecimal valorDesconto) {
+        this.valorDesconto = valorDesconto;
+    }
 
 	public BigDecimal getPercentualDesconto() {
 		return percentualDesconto;
