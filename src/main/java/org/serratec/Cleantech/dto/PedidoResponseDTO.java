@@ -3,7 +3,8 @@ package org.serratec.Cleantech.dto;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
-import org.serratec.Cleantech.Domain.StatusPedido; // Se o StatusPedido for uma enum
+import org.serratec.Cleantech.Domain.StatusPedido;
+import org.serratec.Cleantech.dto.ItemPedidoResponseDTO;
 
 public class PedidoResponseDTO {
     
@@ -13,14 +14,10 @@ public class PedidoResponseDTO {
     private BigDecimal valorTotal; 
     private BigDecimal percentualDesconto;
 
-    // Dados do Cliente (Apenas ID e Nome, para segurança)
     private Long clienteId;
     private String clienteNome;
     
-    // Lista de Itens de SAÍDA (Output)
     private List<ItemPedidoResponseDTO> itens;
-
-    // --- Getters e Setters ---
 
 	public Long getId() {
 		return id;
@@ -85,5 +82,4 @@ public class PedidoResponseDTO {
 	public void setItens(List<ItemPedidoResponseDTO> itens) {
 		this.itens = itens;
 	} 
-
 }

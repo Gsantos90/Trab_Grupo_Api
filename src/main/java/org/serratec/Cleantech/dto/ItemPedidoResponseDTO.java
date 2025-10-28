@@ -4,14 +4,12 @@ import java.math.BigDecimal;
 
 public class ItemPedidoResponseDTO {
     
-    private Long id; // ID do ItemPedido (gerado pelo banco)
+    private Long id;
     private Long produtoId;
-    private String produtoNome; // Adicionamos o nome para ser informativo na resposta
+    private String produtoNome;
     private Integer quantidade;
-    private BigDecimal valorVenda; // Preço unitário do produto no momento da venda
-    private BigDecimal desconto; // Desconto aplicado a este item
-
-    // --- Getters e Setters ---
+    private BigDecimal valorVenda;
+    private BigDecimal desconto;
 
     public Long getId() {
         return id;
@@ -41,7 +39,7 @@ public class ItemPedidoResponseDTO {
         return quantidade;
     }
 
-    public void setQuantidade(Integer quantidade) { // Corrigindo: 'void' aqui deveria ser 'setQuantidade'
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 

@@ -4,7 +4,6 @@ import org.serratec.Cleantech.dto.ProdutoDTO;
 import org.serratec.Cleantech.dto.ProdutoResponseDTO;
 import org.serratec.Cleantech.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity; 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -33,12 +32,5 @@ public class ProdutoController {
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
-    }
-    
-    @DeleteMapping 
-    public ResponseEntity<Void> deletarTodos() {
-        service.deletarTodos(); 
-
-        return ResponseEntity.noContent().build(); 
     }
 }

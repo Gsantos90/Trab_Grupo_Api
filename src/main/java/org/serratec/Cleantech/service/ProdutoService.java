@@ -71,18 +71,25 @@ public class ProdutoService {
     
     public ProdutoResponseDTO atualizar(Long id, ProdutoDTO dto) {
         
-        Optional<Produto> produtoOpt = produtoRepository.findById(id);    
-        if (produtoOpt.isPresent()) {
-            Produto produto = produtoOpt.get();
-            produto.setNome(dto.getNome());
-            produto.setPreco(dto.getPreco());
-            
-            Produto produtoAtualizado = produtoRepository.save(produto); 
-            
-            return toDTO(produtoAtualizado);
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> 
+            new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado com ID: " + id));
+
+        produto.setNome(dto.getNome());
+        produto.setPreco(dto.getPreco());
+        
+        if (dto.getCategoriaId() != null) {
+            Categoria categoria = categoriaRepository.findById(dto.getCategoriaId()).orElseThrow(() -> 
+                new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, 
+                    "Categoria com ID " + dto.getCategoriaId() + " não encontrada para atualização."
+                )
+            );
+            produto.setCategoria(categoria);
         }
         
-        return null; 
+        Produto produtoAtualizado = produtoRepository.save(produto); 
+        
+        return toDTO(produtoAtualizado);
     }
 
     public void deletar(Long id) {
