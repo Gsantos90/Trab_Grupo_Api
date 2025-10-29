@@ -6,6 +6,7 @@ Grupo 3:
 *CLAUDIANE APARECIDA SUTIL GEREMIAS
 *Ireni Iachechen D Oliveira
 *Emanueli schulzelopes
+##
 
 Clean Tech é uma plataforma de e-commerce desenvolvida com arquitetura em camadas, voltada à comercialização de produtos de higiene pessoal e limpeza. 
 O sistema permite o gerenciamento de clientes, categorias, produtos e pedidos, com integração à API ViaCEP para consulta de endereços e envio automático de e-mails de notificação. 
@@ -15,5 +16,6 @@ Clean Tech representa:
 Clareza: transmite ideias de produtos de limpezas em geral com a melhor tecnologia;
 Profissionalismo: traz soluções reais e praticas;
 Versatilidade: você pode adquirir nosso produtos na loja física ou através de API.
+
 
 
