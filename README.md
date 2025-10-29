@@ -8,7 +8,7 @@ Integrantes:
 - Diego Sartorio Seguro
 - CLAUDIANE APARECIDA SUTIL GEREMIAS
 - Ireni Iachechen D Oliveira
-- Emanueli schulzelopes
+- Emanueli schulze lopes
 
 ---
 
