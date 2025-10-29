@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pedido {
@@ -23,9 +24,10 @@ public class Pedido {
 
     private Instant dataPedido; 
     
-    @ManyToOne 
-    @JoinColumn(name = "cliente_id") 
-    private Cliente cliente;
+	@JsonIgnore
+	@ManyToOne 
+	@JoinColumn(name = "cliente_id") 
+	private Cliente clientes;
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
@@ -34,8 +36,9 @@ public class Pedido {
     
     private BigDecimal percentualDesconto; 
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ItemPedido> itens = new HashSet<>(); 
+	@JsonIgnore
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<ItemPedido> itens = new HashSet<>(); 
 
     private String descricao; 
 
@@ -67,11 +70,11 @@ public class Pedido {
 	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return clientes;
 	}
 
 	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+		this.clientes = cliente;
 	}
 
 	public StatusPedido getStatus() {

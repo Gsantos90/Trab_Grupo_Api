@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ItemPedido {
@@ -14,9 +15,10 @@ public class ItemPedido {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private Pedido pedido;
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "pedido_id")
+	private Pedido pedido;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")

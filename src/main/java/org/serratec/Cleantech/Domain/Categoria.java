@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Categoria {
@@ -19,8 +20,9 @@ public class Categoria {
       @Column(nullable = false, unique = true)
       private String nome;
 
-      @OneToMany(mappedBy = "categoria")
-      private List<Produto> produtos;
+    @JsonIgnore
+    @OneToMany(mappedBy = "categoria")
+    private List<Produto> produtos;
 
 
      
