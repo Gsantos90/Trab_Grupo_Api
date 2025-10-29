@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "b7965ef6-8491-42e0-8382-5c039cfc4003",
+		"name": "TrabalhoFinal_API",
+		"description": "Trabalho Final _API  \nPasso a passo - POSTMAN.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49092689",
+		"_collection_link": "https://pamelapereira247-4256211.postman.co/workspace/pamelapereira247's-Workspace~d21c45a3-40a5-4f37-8e49-ac78df5ba70f/collection/49092689-b7965ef6-8491-42e0-8382-5c039cfc4003?action=share&source=collection_link&creator=49092689"
+	},
+	"item": [
+		{
+			"name": "Cadastrar - Categorias",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Produtos Inteligentes de Limpeza\",\r\n  \"descricao\": \"teste.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/categorias",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar - Categorias",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 1,\r\n  \"nome\": \"Produtos Inteligentes de Limpeza e Higiene - TESTE2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/categorias",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar - Categorias",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 1,\r\n  \"nome\": \"Produtos Inteligentes de Higiene - TESTE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/categorias/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"categorias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar - Produtos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Creme Hidratantes\",\r\n  \"descricao\": \"Hidratante diário para pele seca, com proteção UV e aloe vera.\",\r\n  \"preco\": 49.90,\r\n  \"categoriaId\": 1 \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar - Produtos (Cat. vinculada)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar - Clientes (Via CEP)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n  \"nome\": \"MONICA\",\r\n  \"telefone\": \"11339999933\",\r\n  \"email\": \"diego.sseguro@gmail.com\",\r\n  \"cpf\": \"11545698901\",\r\n  \"cep\": \"25963300\",\r\n    \"numero\": \"100\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar - Clientes",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n  \"nome\": \"MONICA\",\r\n  \"telefone\": \"11339999933\",\r\n  \"email\": \"diego.sseguro@gmail.com\",\r\n  \"cpf\": \"11345698901\",\r\n  \"cep\": \"25963300\",\r\n    \"numero\": \"100\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar - Clientes",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar - Pedido (Múltiplos podutos)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clienteId\": 2,\r\n    \"data\": \"2025-06-01T12:00:00Z\",\r\n    \"itens\": [\r\n      {\r\n        \"produtoId\": 1,\r\n        \"quantidade\": 2,\r\n        \"precoUnitario\": 50.0\r\n      },\r\n      {\r\n        \"produtoId\": 2,\r\n        \"quantidade\": 1,\r\n        \"precoUnitario\": 100.0\r\n      }\r\n    ]\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PEDIDO - Alteração Status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"CANCELADO\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pedidos/1/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pedidos",
+						"1",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PEDIDO - Listar (Valor Total)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE CLIENTE - Ireni",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clienteId\": 2,\r\n    \"data\": \"2025-06-01T12:00:00Z\",\r\n    \"itens\": [\r\n      {\r\n        \"produtoId\": 1,\r\n        \"quantidade\": 2,\r\n        \"precoUnitario\": 50.0\r\n      },\r\n      {\r\n        \"produtoId\": 2,\r\n        \"quantidade\": 1,\r\n        \"precoUnitario\": 100.0\r\n      }\r\n    ]\r\n  }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CADASTRO CLIENTE - Ireni",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n  \"nome\": \"DIEGO\",\r\n  \"telefone\": \"11339999112\",\r\n  \"email\": \"diego.sseguro@gmail.com\",\r\n  \"cpf\": \"11545698550\",\r\n  \"cep\": \"25963300\",\r\n    \"numero\": \"100\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LISTA PEDIDOS - GABRIEL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/relatorio/status-pedidos?data=2025-06-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"relatorio",
+						"status-pedidos"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "2025-06-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
