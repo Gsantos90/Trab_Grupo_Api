@@ -11,9 +11,7 @@ public class Categoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    // getters e setters
-
-
+  
 	public Long getId() {
 		return id;
 	}

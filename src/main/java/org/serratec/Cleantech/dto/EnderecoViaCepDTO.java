@@ -15,7 +15,6 @@ public class EnderecoViaCepDTO {
     @JsonProperty("erro")
     private Boolean erro;
 
-    // getters e setters
     public String getCep() { return cep; }
     public void setCep(String cep) { this.cep = cep; }
     public String getLogradouro() { return logradouro; }

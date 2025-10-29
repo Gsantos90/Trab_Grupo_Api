@@ -28,7 +28,7 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemPedido> itens;
 
-    private String descricao; // ajuste incluído
+    private String descricao; 
 
     public Long getId() {
         return id;

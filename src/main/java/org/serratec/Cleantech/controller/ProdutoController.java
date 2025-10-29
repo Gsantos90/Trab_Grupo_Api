@@ -23,13 +23,11 @@ public class ProdutoController {
         return service.listarTodos();
     }
 
-    // PUT - Atualiza um produto existente
     @PutMapping("/{id}")
     public Produto atualizar(@PathVariable Long id, @RequestBody ProdutoDTO dto) {
         return service.atualizar(id, dto);
     }
 
-    // DELETE - Remove um produto pelo id
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Long id) {
         service.deletar(id);

@@ -6,7 +6,6 @@ public class CategoriaDTO {
     private Long id;
     private String nome;
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
