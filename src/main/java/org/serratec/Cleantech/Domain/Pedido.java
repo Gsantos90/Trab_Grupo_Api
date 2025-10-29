@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pedido {
@@ -24,9 +25,16 @@ public class Pedido {
 
     private Instant dataPedido; 
     
+<<<<<<< HEAD
     @ManyToOne 
     @JoinColumn(name = "cliente_id") 
     private Cliente cliente; 
+=======
+	@JsonIgnore
+	@ManyToOne 
+	@JoinColumn(name = "cliente_id") 
+	private Cliente clientes;
+>>>>>>> f09ef77b2a4ad3cf1fd815a444e4f22c5c85fcb7
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status; 
@@ -36,6 +44,7 @@ public class Pedido {
     private BigDecimal valorBruto;
     private BigDecimal valorDesconto;
 
+<<<<<<< HEAD
 
     public BigDecimal getValorBruto() {
 		return valorBruto;
@@ -58,6 +67,11 @@ public class Pedido {
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<ItemPedido> itens = new HashSet<>(); 
+=======
+	@JsonIgnore
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<ItemPedido> itens = new HashSet<>(); 
+>>>>>>> f09ef77b2a4ad3cf1fd815a444e4f22c5c85fcb7
 
     
     public BigDecimal calcularValorBruto() {
@@ -89,11 +103,11 @@ public class Pedido {
 	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return clientes;
 	}
 
 	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+		this.clientes = cliente;
 	}
 
 	public StatusPedido getStatus() {

@@ -91,53 +91,75 @@ public class PedidoService {
     }
 
     @Transactional
+<<<<<<< HEAD
     public PedidoResponseDTO salvar(PedidoDTO dto) {
+=======
+    public Pedido salvar(PedidoDTO dto) {
+        if (dto.getClienteId() == null) {
+            throw new IllegalArgumentException("O campo 'clienteId' é obrigatório.");
+        }
+        if (dto.getItens() == null || dto.getItens().isEmpty()) {
+            throw new IllegalArgumentException("O pedido deve conter ao menos um item.");
+        }
+>>>>>>> f09ef77b2a4ad3cf1fd815a444e4f22c5c85fcb7
 
         Optional<Cliente> clienteOpt = clienteRepository.findById(dto.getClienteId());
-        Cliente cliente = clienteOpt.orElseThrow(() -> 
-            new ResourceNotFoundException("Cliente não encontrado com ID: " + dto.getClienteId()));
-
+        if (clienteOpt.isEmpty()) {
+            throw new IllegalArgumentException("O cliente informado não existe. Verifique o 'clienteId'.");
+        }
+        Cliente cliente = clienteOpt.get();
 
         Pedido pedido = new Pedido();
         pedido.setDataPedido(dto.getData() != null ? dto.getData() : Instant.now());
-        pedido.setCliente(cliente); 
-        pedido.setStatus(StatusPedido.NOVO); 
-        
+        pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.NOVO);
+
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
         BigDecimal valorTotalBruto = BigDecimal.ZERO;
 
         for (ItemPedidoDTO itemDto : dto.getItens()) {
-            
+            if (itemDto.getProdutoId() == null) {
+                throw new IllegalArgumentException("O campo 'produtoId' é obrigatório em cada item do pedido.");
+            }
+            if (itemDto.getQuantidade() == null || itemDto.getQuantidade() <= 0) {
+                throw new IllegalArgumentException("O campo 'quantidade' deve ser maior que zero em cada item do pedido.");
+            }
+
             Optional<Produto> produtoOpt = produtoRepository.findById(itemDto.getProdutoId());
-            Produto produto = produtoOpt.orElseThrow(() -> 
-                new ResourceNotFoundException("Produto não encontrado com ID: " + itemDto.getProdutoId()));
+            if (produtoOpt.isEmpty()) {
+                throw new IllegalArgumentException("O produto informado não existe. Verifique o 'produtoId'.");
+            }
+            Produto produto = produtoOpt.get();
 
             ItemPedido item = new ItemPedido();
             item.setPedido(pedidoSalvo);
             item.setProduto(produto);
 
             BigDecimal precoUnitario = produto.getPreco();
-            
-            item.setValorVenda(precoUnitario); 
+
+            item.setValorVenda(precoUnitario);
             item.setQuantidade(itemDto.getQuantidade());
             item.setDesconto(itemDto.getDesconto());
-            
+
             BigDecimal valorItemBruto = precoUnitario.multiply(new BigDecimal(itemDto.getQuantidade()));
             valorTotalBruto = valorTotalBruto.add(valorItemBruto);
 
             itemPedidoRepository.save(item);
             pedidoSalvo.getItens().add(item);
         }
-        
-        System.out.println("DEBUG: Valor Bruto ANTES do Desconto: " + valorTotalBruto); 
+
+        System.out.println("DEBUG: Valor Bruto ANTES do Desconto: " + valorTotalBruto);
 
         BigDecimal percentualDescontoProgressivo = calcularDescontoProgressivo(valorTotalBruto);
-        BigDecimal valorDescontoProgressivo = valorTotalBruto.multiply(percentualDescontoProgressivo);      
+        BigDecimal valorDescontoProgressivo = valorTotalBruto.multiply(percentualDescontoProgressivo);
         BigDecimal valorTotalLiquido = valorTotalBruto.subtract(valorDescontoProgressivo);
+<<<<<<< HEAD
         
         pedidoSalvo.setValorBruto(valorTotalBruto);
         pedidoSalvo.setValorDesconto(valorDescontoProgressivo);
+=======
+>>>>>>> f09ef77b2a4ad3cf1fd815a444e4f22c5c85fcb7
 
         pedidoSalvo.setPercentualDesconto(percentualDescontoProgressivo);
         pedidoSalvo.setValorTotal(valorTotalLiquido);
